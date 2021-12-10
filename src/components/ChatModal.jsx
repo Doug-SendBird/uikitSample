@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Channel, useSendbirdStateContext, sendBirdSelectors } from 'sendbird-uikit';
+import { Channel, useSendbirdStateContext, sendBirdSelectors, withSendBird } from 'sendbird-uikit';
 import 'sendbird-uikit/dist/index.css';
 import { Box, Fab, Card, Badge } from '@mui/material';
 import useAuth from '../hooks/useAuth';
-const channel_url = 'sendbird_group_channel_133965944_826fbb10cb20fe33e31dc49fc9bed3a04abb97f5';
 
-export const ChatModal = () => {
+const CustomComponent = ({ createChannel, sdk, leaveChannel }) => {
   const context = useSendbirdStateContext();
   const sdkInstance = sendBirdSelectors.getSdk(context);
   const [isActive, setActive] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [channelUrl, setChannelUrl] = useState('');
   const { auth } = useAuth();
 
   useEffect(() => {
-    if (sdkInstance && sdkInstance.isSessionOpened) {
-      sdkInstance.getTotalUnreadMessageCount((count, error) => {
-        setUnreadCount(count);
-      });
+    if (sdkInstance && sdkInstance.isSessionOpened && channelUrl !== "") {
+      sdkInstance.GroupChannel.getChannel(channelUrl)
+      .then(c => {
+        setUnreadCount(c.unreadMessageCount);
+      })
+      .catch(c => console.warn(c));
     }
-  }, [sdkInstance]);
+  }, [sdkInstance, channelUrl]);
 
   if (auth.isAuthenticated) {
     if (!isActive) {
@@ -29,7 +31,23 @@ export const ChatModal = () => {
               color="primary"
               aria-label="add"
               onClick={() => {
-                setActive(!isActive);
+                if (channelUrl==="") {
+                  let params = new sdkInstance.GroupChannelParams();
+                  params.isPublic = false;
+                  params.isEphemeral = false;
+                  params.isDistinct = true;
+                  params.addUserIds(['RP1']);
+                  params.name = "Recruitment Partner Chat";
+                  createChannel(params)
+                      .then(c => {
+                          setChannelUrl(c.url);
+                          setActive(!isActive);
+                      })
+                      .catch(c => console.warn(c));
+                } else
+                {
+                  setActive(!isActive);
+                }
               }}
             >
               Chat
@@ -48,7 +66,7 @@ export const ChatModal = () => {
               borderRadius: 5,
             }}
           >
-            <Channel channelUrl={channel_url} />
+            <Channel channelUrl={channelUrl} />
           </Card>
           <Fab
             color="primary"
@@ -67,3 +85,10 @@ export const ChatModal = () => {
     return <></>;
   }
 };
+
+export const ChatModal = withSendBird(CustomComponent, (state) => {
+  const createChannel = sendBirdSelectors.getCreateChannel(state);
+  const leaveChannel = sendBirdSelectors.getLeaveChannel(state);
+  const sdk = sendBirdSelectors.getSdk(state);
+  return ({ createChannel, sdk, leaveChannel });
+});
