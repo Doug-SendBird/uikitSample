@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 export const Page1 = () => {
   const navigate = useNavigate();
-
+  
   return (
     <div>
       <div>
@@ -26,6 +26,14 @@ export const Page1 = () => {
             }}
           >
             Go to Page 3
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate('/signout');
+            }}
+          >
+            Signout
           </Button>
         </Stack>
       </div>
