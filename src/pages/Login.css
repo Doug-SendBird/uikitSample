@@ -1,0 +1,129 @@
+button {
+  appearance: auto;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: center;
+  align-items: flex-start;
+  cursor: default;
+  box-sizing: border-box;
+  margin: 0em;
+  font: 400, 13.333px Arial;
+  padding: 1px 6px;
+  border-width: 2px;
+  border-style: outset;
+  border-image: initial;
+}
+
+/* Login */
+.loginPageHeader {
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  width: 100%;
+  height: 76px;
+  min-height: 76px;
+  margin-bottom: 32px;
+}
+
+.loginLogo {
+  height: 24px;
+}
+
+.loginPaper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px;
+}
+
+.loginConnectBtn {
+  height: 48px;
+  display: block;
+  margin-top: 24px;
+  background: #742ddd;
+}
+
+.loginConnectBtn:hover {
+  background: #6211c8;
+}
+
+.loginConnectBtn span {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: 'Avenir Next';
+}
+
+.loginFooter {
+  padding: 24px 0px;
+  text-align: center;
+}
+
+.loginFooterLink {
+  position: relative;
+  display: inline-block;
+  padding: 0 10px;
+  line-height: 1.4;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  color: #742ddd;
+}
+
+.loginWrapper {
+  display: flex;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  height: 100vh;
+  background: #ffffff;
+}
+
+.loginWrapper2 {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 24px;
+  width: 100%;
+  height: 100vh;
+}
+
+.loginBody {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  justify-content: stretch;
+  width: 100%;
+  max-width: 460px;
+}
+
+.loginAuth {
+  flex: 1 1 0px;
+  -webkit-box-flex: 1;
+}
+
+.loginAuthHeader {
+  padding-bottom: 32px;
+  text-align: center;
+}
+
+.loginAuthHeader h1 {
+  margin: 0px -20px;
+  padding: 0px;
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.27;
+  letter-spacing: -1.5px;
+  font-family: 'Avenir Next';
+}
+
+.loginAuthForm {
+  width: 100%;
+  margin-top: 1;
+}

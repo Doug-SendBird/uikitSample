@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { StylesProvider } from '@mui/styles';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { Router } from './routes';
+
+const theme = createTheme({
+  palette: {
+    background: {
+      default: '#ffffff',
+    },
+    primary: {
+      main: '#742ddd',
+    },
+    secondary: {
+      main: '#f5f3f0',
+    },
+    error: {
+      main: '#C0485E',
+    },
+    success: {
+      main: '#027D69',
+    },
+  },
+  typography: {
+    fontFamily: ['Avenir Next', 'sans-serif'].join(','),
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StylesProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
+    </StylesProvider>
   );
 }
 
