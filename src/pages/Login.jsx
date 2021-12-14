@@ -5,14 +5,13 @@ import useAuth from '../hooks/useAuth';
 import { appData } from '../const';
 import './Login.css';
 
-export const Login = ({ parentState, stateSetter }) => {
+export const Login = () => {
   const { auth, onSignIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
   const [state, setState] = useState({
     userId: appData.userId,
-    appId: appData.appId,
     accessToken: appData.accessToken,
     loading: false,
   });
@@ -33,7 +32,7 @@ export const Login = ({ parentState, stateSetter }) => {
     try {
       event.preventDefault();
       onSignIn({
-        appId: state.appId,
+        appId: appData.appId,
         userId: state.userId,
         accessToken: state.accessToken,
       });
@@ -64,17 +63,6 @@ export const Login = ({ parentState, stateSetter }) => {
                         onChange={handleChange}
                         value={state.userId}
                         autoFocus
-                      />
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="appId"
-                        label="Application ID"
-                        name="appId"
-                        onChange={handleChange}
-                        value={state.appId}
                       />
                       <TextField
                         variant="outlined"

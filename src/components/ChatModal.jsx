@@ -15,6 +15,17 @@ export const ChatModal = ({ parentState, parentSetState }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { auth } = useAuth();
 
+  // Register handler to update unreadCount
+  if (sdkInstance && sdkInstance?.isSessionOpened) {
+    const channelHandlers = new sdkInstance.ChannelHandler();
+    channelHandlers.onChannelChanged = (channel) => {
+      if (channel.url === appData.channelUrl) {
+        setUnreadCount(channel.unreadMessageCount);
+      }
+    };
+    sdkInstance.addChannelHandler('sampleChatHandler', channelHandlers);
+  }
+
   useEffect(() => {
     if (sbContext?.stores?.sdkStore?.error && !sbContext?.stores?.sdkStore?.initialized) {
       console.log('Token Expired');
@@ -26,13 +37,11 @@ export const ChatModal = ({ parentState, parentSetState }) => {
         });
       });
     } else if (sbContext?.stores?.sdkStore?.initialized) {
-      setIsLoading(false);
       if (sdkInstance && sdkInstance.isSessionOpened) {
-        console.log(sdkInstance);
-        setIsLoading(false);
         sdkInstance.getTotalUnreadMessageCount((count, error) => {
-          setUnreadCount(count);
+          setUnreadCount(parseInt(count));
         });
+        setIsLoading(false);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
