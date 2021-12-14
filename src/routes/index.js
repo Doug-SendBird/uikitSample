@@ -1,6 +1,5 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import { Login } from '../pages/Login';
-import { SignOut } from '../pages/SignOut';
 import { Page1 } from '../pages/Page1';
 import { Page2 } from '../pages/Page2';
 import { Page3 } from '../pages/Page3';
@@ -15,10 +14,6 @@ export const Router = () =>
     {
       path: '/login',
       element: <Login />,
-    },
-    {
-      path: '/signout',
-      element: <SignOut />,
     },
     {
       path: '/page1',

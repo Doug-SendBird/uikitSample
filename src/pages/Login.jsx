@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, TextField } from '@mui/material';
 import useAuth from '../hooks/useAuth';
+import { appData } from '../const';
 import './Login.css';
 
 export const Login = ({ parentState, stateSetter }) => {
@@ -10,9 +11,9 @@ export const Login = ({ parentState, stateSetter }) => {
   const navigate = useNavigate();
 
   const [state, setState] = useState({
-    userId: '',
-    appId: '',
-    accessToken: '',
+    userId: appData.userId,
+    appId: appData.appId,
+    accessToken: appData.accessToken,
     loading: false,
   });
 
