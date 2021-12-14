@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useAuth from '../hooks/useAuth';
@@ -10,14 +11,19 @@ SendbirdProvider.propTypes = {
 
 export default function SendbirdProvider({ children }) {
   const { auth } = useAuth();
+  const [state, setState] = useState({
+    appId: auth.appId,
+    userId: auth.userId,
+    accessToken: auth.accessToken,
+  });
 
   if (!auth.isAuthenticated) {
     return <Navigate to="/login" replace />;
   } else {
     return (
-      <SendBirdProvider appId={auth.appId} userId={auth.userId} accessToken={auth.accessToken}>
+      <SendBirdProvider appId={state.appId} userId={state.userId} accessToken={state.accessToken}>
         {children}
-        <ChatModal />
+        <ChatModal parentSetState={setState} parentState={state} />
       </SendBirdProvider>
     );
   }
